@@ -11,12 +11,13 @@ import { Fragment, useState } from "react";
 import toast from "react-hot-toast";
 import { imageUpload } from "../../api/utils";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
-import UpdateRoomForm from "../Form/UpdateRoomForm";
+import UpdateCampForm from "../Form/updateCampForm";
 
 const UpdateCampModal = ({ setIsEditModalOpen, isOpen, camp, refetch }) => {
   const axiosSecure = useAxiosSecure();
   const [loading, setLoading] = useState(false);
   const [campData, setCampData] = useState(camp);
+  const [imageText, setImageText] = useState("Upload Image");
 
   //   handle Image update
   const handleImage = async (image) => {
@@ -26,6 +27,7 @@ const UpdateCampModal = ({ setIsEditModalOpen, isOpen, camp, refetch }) => {
       const image_url = await imageUpload(image);
       console.log(image_url);
       setCampData({ ...campData, image: image_url });
+      setImageText(image.name);
       setLoading(false);
     } catch (err) {
       console.log(err);
@@ -33,23 +35,24 @@ const UpdateCampModal = ({ setIsEditModalOpen, isOpen, camp, refetch }) => {
       toast.error(err.message);
     }
   };
+  console.log(campData);
 
   const handleSubmit = async (e) => {
     setLoading(true);
     e.preventDefault();
-    const updatedRoomData = Object.assign({}, campData);
-    delete updatedRoomData._id;
-    console.log(updatedRoomData);
+    const updateCampData = Object.assign({}, campData);
+    delete updateCampData._id;
+    console.log(updateCampData);
     try {
       const { data } = await axiosSecure.put(
-        `/camp/update/${camp?._id}`,
-        updatedRoomData
+        `/update-camp/${camp?._id}`,
+        updateCampData
       );
       console.log(data);
       refetch();
       setIsEditModalOpen(false);
       setLoading(false);
-      toast.success("Home info updated");
+      toast.success("Camp info updated");
     } catch (err) {
       console.log(err);
       setLoading(false);
@@ -87,25 +90,26 @@ const UpdateCampModal = ({ setIsEditModalOpen, isOpen, camp, refetch }) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <DialogPanel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+              <DialogPanel className="w-full max-w-xl transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                 <DialogTitle
                   as="h3"
                   className="text-lg font-medium text-center leading-6 text-gray-900"
                 >
-                  Update Room Info
+                  Update Camp Info
                 </DialogTitle>
                 <div className="mt-2 w-full">
                   {/* Update room form */}
-                  <UpdateRoomForm
+                  <UpdateCampForm
                     handleSubmit={handleSubmit}
                     campData={campData}
                     loading={loading}
                     handleImage={handleImage}
                     setCampData={setCampData}
+                    imageText={imageText}
                   />
                 </div>
                 <hr className="mt-8 " />
-                <div className="mt-2 ">
+                <div className="mt-2 flex justify-center">
                   <button
                     type="button"
                     className="inline-flex justify-center rounded-md border border-transparent bg-red-100 px-4 py-2 text-sm font-medium text-red-900 hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"

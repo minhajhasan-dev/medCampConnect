@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { Helmet } from "react-helmet-async";
 import toast from "react-hot-toast";
-import RoomDataRow from "../../../components/Dashboard/TableRows/CampDataRow";
+import CampDataRow from "../../../components/Dashboard/TableRows/CampDataRow";
 import LoadingSpinner from "../../../components/Shared/LoadingSpinner";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 const ManageCamps = () => {
@@ -104,7 +104,7 @@ const ManageCamps = () => {
                   {/* Room row data */}
 
                   {camps.map((camp) => (
-                    <RoomDataRow
+                    <CampDataRow
                       key={camp._id}
                       camp={camp}
                       handleDelete={handleDelete}

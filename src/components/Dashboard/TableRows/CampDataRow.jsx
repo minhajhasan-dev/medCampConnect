@@ -1,7 +1,9 @@
+import { format } from "date-fns";
 import PropTypes from "prop-types";
 import { useState } from "react";
 import DeleteModal from "../../Modal/DeleteModal";
-import UpdateRoomModal from "../../Modal/UpdateCampModal";
+import UpdateCampModal from "../../Modal/UpdateCampModal";
+
 // eslint-disable-next-line react/prop-types
 const CampDataRow = ({ camp, handleDelete, refetch }) => {
   // for delete modal
@@ -11,7 +13,9 @@ const CampDataRow = ({ camp, handleDelete, refetch }) => {
     setIsOpen(false);
   };
 
-  // for update modal
+  // format time in 12 h format
+  const time = camp?.time;
+
   return (
     <tr>
       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
@@ -34,10 +38,12 @@ const CampDataRow = ({ camp, handleDelete, refetch }) => {
         </div>
       </td>
       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-        <p className="text-gray-900 whitespace-no-wrap">{camp?.date}</p>
+        <p className="text-gray-900 whitespace-no-wrap">
+          {format(new Date(camp?.date), "dd MMM yyyy")}
+        </p>
       </td>
       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-        <p className="text-gray-900 whitespace-no-wrap">{camp?.time}</p>
+        <p className="text-gray-900 whitespace-no-wrap">{time}</p>
       </td>
       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
         <p className="text-gray-900 whitespace-no-wrap">{camp?.location}</p>
@@ -78,7 +84,7 @@ const CampDataRow = ({ camp, handleDelete, refetch }) => {
           <span className="relative">Update</span>
         </button>
         {/* Update Modal */}
-        <UpdateRoomModal
+        <UpdateCampModal
           isOpen={isEditModalOpen}
           setIsEditModalOpen={setIsEditModalOpen}
           camp={camp}
