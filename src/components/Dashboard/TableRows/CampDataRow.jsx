@@ -14,7 +14,13 @@ const CampDataRow = ({ camp, handleDelete, refetch }) => {
   };
 
   // format time in 12 h format
-  const time = camp?.time;
+
+  // eslint-disable-next-line no-shadow
+  const convertTime12to24 = (time) => {
+    const [hours, minutes] = time.split(":");
+    return `${hours % 12 || 12}:${minutes} ${hours >= 12 ? "PM" : "AM"}`;
+  };
+  const time = convertTime12to24(camp?.time);
 
   return (
     <tr>
