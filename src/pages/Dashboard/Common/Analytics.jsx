@@ -1,11 +1,11 @@
 import LoadingSpinner from "../../../components/Shared/LoadingSpinner";
 import useRole from "../../../hooks/useRole";
-import HostStatistics from "../Host/HostStatistics";
+import ParticipantStatistics from "../Participant/ParticipantStatistics";
 
-const Statistics = () => {
+const Analytics = () => {
   const [role, isLoading] = useRole();
   if (isLoading) return <LoadingSpinner />;
-  return <>{role === "participant" && <HostStatistics />}</>;
+  return <>{role === "participant" && <ParticipantStatistics />}</>;
 };
 
-export default Statistics;
+export default Analytics;

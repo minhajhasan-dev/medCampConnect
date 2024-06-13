@@ -4,7 +4,7 @@ import { Chart } from "react-google-charts";
 import LoadingSpinner from "../Shared/LoadingSpinner";
 
 const options = {
-  title: "Sales Over Time",
+  title: "Joining Over Time",
   curveType: "function",
   legend: { position: "bottom" },
   series: [{ color: "#F43F5E" }],
@@ -19,7 +19,7 @@ const SalesLineChart = ({ data }) => {
     <>
       {loading ? (
         <LoadingSpinner smallHeight />
-      ) : data.length > 1 ? (
+      ) : data.length > 0 ? (
         <Chart
           chartType="LineChart"
           width="100%"

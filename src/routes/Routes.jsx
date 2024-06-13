@@ -3,8 +3,8 @@ import DashboardLayout from "../layouts/DashboardLayout";
 import Main from "../layouts/Main";
 import AvailableCamps from "../pages/Available Camps/AvailableCamps";
 import CampDetails from "../pages/Camp Details/CampDetails";
+import Analytics from "../pages/Dashboard/Common/Analytics";
 import Profile from "../pages/Dashboard/Common/Profile";
-import Statistics from "../pages/Dashboard/Common/Statistics";
 import AddCamp from "../pages/Dashboard/Organizer/AddCamp";
 import ManageCamps from "../pages/Dashboard/Organizer/ManageCamps";
 import ManageRegisteredCamps from "../pages/Dashboard/Organizer/ManageRegisteredCamps";
@@ -62,7 +62,7 @@ export const router = createBrowserRouter([
         path: "analytics",
         element: (
           <PrivateRoute>
-            <Statistics />
+            <Analytics />
           </PrivateRoute>
         ),
       },

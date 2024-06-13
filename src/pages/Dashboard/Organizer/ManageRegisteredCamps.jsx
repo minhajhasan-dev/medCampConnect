@@ -4,7 +4,7 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 import LoadingSpinner from "../../../components/Shared/LoadingSpinner";
 
-import UserDataRow from "../../../components/Dashboard/TableRows/UserDataRow";
+import UserDataRow from "../../../components/Dashboard/TableRows/SelfBookingDataRow";
 const ManageRegisteredCamps = () => {
   const axiosSecure = useAxiosSecure();
   //   Fetch  Data
@@ -26,7 +26,7 @@ const ManageRegisteredCamps = () => {
     <>
       <div className="container mx-auto px-4 sm:px-8">
         <Helmet>
-          <title>Manage Users</title>
+          <title>Manage Registered Camps</title>
         </Helmet>
         <div className="py-8">
           <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">

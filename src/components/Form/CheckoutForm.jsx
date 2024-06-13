@@ -108,6 +108,10 @@ const CheckoutForm = ({ closeModal, bookingInfo, formData, refetch }) => {
         // await axiosSecure.patch(`/room/status/${bookingInfo?._id}`, {
         //   status: true,
         // });
+        // 4. Increase participant_count by 1
+        await axiosSecure.patch(`/camp/${bookingInfo?._id}`, {
+          $inc: { participant_count: 1 },
+        });
 
         // update ui
         refetch();
