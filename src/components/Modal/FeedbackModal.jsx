@@ -11,31 +11,37 @@ import toast from "react-hot-toast";
 import useAuth from "../../hooks/useAuth";
 import { axiosSecure } from "../../hooks/useAxiosSecure";
 
-const FeedbackModal = ({ closeModal, setIsOpen, isOpen }) => {
+const FeedbackModal = ({ closeModal, setIsOpen, isOpen, title, campId }) => {
   const [rating, setRating] = useState(0);
   const [feedback, setFeedback] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const handleRatingChange = (value) => {
     setRating(value);
   };
   const { user } = useAuth();
+  console.log(campId);
 
   const handleSubmit = async () => {
     setIsOpen(false);
+    // send feedback to the server
     try {
       await axiosSecure.post("/feedbacks", {
+        title,
         rating,
         feedback,
         email: user.email,
         name: user.displayName,
         photo: user.photoURL,
+        campId,
       });
+      setIsSubmitting(true);
       toast.success("Feedback Submitted");
       console.log({ rating, feedback });
     } catch (error) {
       toast.error("Failed to submit feedback");
     }
   };
-  // send feedback to the server
 
   return (
     <>
@@ -64,12 +70,12 @@ const FeedbackModal = ({ closeModal, setIsOpen, isOpen }) => {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <DialogPanel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                <DialogPanel className="w-full max-w-lg transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                   <DialogTitle
                     as="h3"
                     className="text-lg font-medium text-center leading-6 text-gray-900"
                   >
-                    Share your feedback
+                    Share your feedback on {title}
                   </DialogTitle>
                   <hr className="mt-3 " />
                   {/* rating here */}
@@ -103,10 +109,9 @@ const FeedbackModal = ({ closeModal, setIsOpen, isOpen }) => {
                       Close
                     </button>
                     <button
-                      onClick={() => {
-                        handleSubmit();
-                      }}
+                      onClick={handleSubmit}
                       className="bg-green-600 text-white px-3 py-1 rounded-md ml-2"
+                      disabled={isSubmitting}
                     >
                       Submit
                     </button>

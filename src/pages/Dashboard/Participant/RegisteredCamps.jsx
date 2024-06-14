@@ -9,8 +9,10 @@ import useAuth from "../../../hooks/useAuth";
 const RegisteredCamps = () => {
   const { user } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
+  const [openModalId, setOpenModalId] = useState(null);
+
   const axiosSecure = useAxiosSecure();
-  //   Fetch  Data
+
   const {
     data: bookings = [],
     isLoading,
@@ -88,10 +90,13 @@ const RegisteredCamps = () => {
                     <SelfBookingDataRow
                       key={booking?._id}
                       booking={booking}
+                      campId={booking?._id}
                       refetch={refetch}
                       isOpen={isOpen}
                       setIsOpen={setIsOpen}
                       closeModal={() => (isOpen ? false : true)}
+                      openModalId={openModalId}
+                      setOpenModalId={setOpenModalId}
                     />
                   ))}
                 </tbody>

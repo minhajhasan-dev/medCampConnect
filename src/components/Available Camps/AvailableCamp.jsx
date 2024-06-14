@@ -76,7 +76,7 @@ const AvailableCamp = () => {
       </form>
       {availableCamps && availableCamps.length > 0 ? (
         <div
-          className={`pt-12 max-w-4xl gap-5 mx-auto grid grid-cols-1 ${
+          className={`pt-12 mb-5 max-w-4xl gap-5 mx-auto grid grid-cols-1 ${
             layout === 2
               ? "md:grid-cols-2 max-w-2xl"
               : "md:grid-cols-3 max-w-5xl"

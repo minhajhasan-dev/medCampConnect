@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { gsap } from "gsap";
+import { useEffect, useRef, useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import { BiSolidDashboard } from "react-icons/bi";
 import { FaUser } from "react-icons/fa6";
@@ -12,19 +13,25 @@ import Container from "../Container";
 const Navbar = () => {
   const { user, logOut } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
+  const titleRef = useRef(null);
 
+  useEffect(() => {
+    gsap.from(titleRef.current, { duration: 1, x: -100, autoAlpha: 0 });
+  }, []);
   return (
     <div className="fixed w-full bg-white z-10 shadow-sm">
       <div className="py-4 border-b-[1px]">
         <Container>
-          <div className="flex flex-row  items-center justify-between gap-3 md:gap-0">
+          <div className="flex flex-row md:max-w-[98rem] mx-auto  items-center justify-between gap-3 md:gap-0">
             {/* Logo */}
 
             <Link to="/">
               {" "}
               <div className="flex items-baseline gap-2">
                 <img src={logo} alt="logo" width="25" height="50" />
-                <h1 className="text-2xl font-semibold">MedCampConnect</h1>
+                <h1 ref={titleRef} className="text-2xl font-semibold">
+                  MedCampConnect
+                </h1>
               </div>
             </Link>
             {/* Dropdown Menu */}
@@ -46,7 +53,7 @@ const Navbar = () => {
                     </Link>
                     {!user && (
                       <Link
-                        to={"/signup"}
+                        to={"/login"}
                         className="cursor-pointer hover:bg-neutral-100 py-3 px-4 text-sm font-semibold rounded-full  transition"
                       >
                         Join Us

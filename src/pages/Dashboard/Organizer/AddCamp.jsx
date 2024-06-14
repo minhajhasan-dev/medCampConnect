@@ -1,4 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
+import moment from "moment";
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import toast from "react-hot-toast";
@@ -38,11 +39,16 @@ const AddCamp = () => {
     const image = form.image.files[0];
     const camp_fees = form.campFees.value;
     const date = form.date.value;
+    let formattedDate = moment(date).format("D MMM YY");
     const time = form.time.value;
+    let formattedTime = moment(time, "HH:mm").format("h:mm A");
     const location = form.location.value;
     const healthcare_professional = form.healthcareProfessionalName.value;
     const participant_count = form.participantCount.value;
     const description = form.description.value;
+
+    console.log(date, time);
+    console.log(formattedDate, formattedTime);
 
     try {
       const image_url = await imageUpload(image);
@@ -51,8 +57,8 @@ const AddCamp = () => {
         camp_name,
         image: image_url,
         camp_fees,
-        date,
-        time,
+        date: formattedDate,
+        time: formattedTime,
         location,
         healthcare_professional,
         participant_count,

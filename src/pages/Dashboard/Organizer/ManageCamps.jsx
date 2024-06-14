@@ -19,6 +19,7 @@ const ManageCamps = () => {
       return data;
     },
   });
+  console.log(camps);
 
   //   delete
   const { mutateAsync } = useMutation({

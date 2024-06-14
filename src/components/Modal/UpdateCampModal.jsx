@@ -1,4 +1,6 @@
 /* eslint-disable react/prop-types */
+import moment from "moment";
+
 import {
   Dialog,
   DialogPanel,
@@ -42,6 +44,20 @@ const UpdateCampModal = ({ setIsEditModalOpen, isOpen, camp, refetch }) => {
     e.preventDefault();
     const updateCampData = Object.assign({}, campData);
     delete updateCampData._id;
+
+    // Format the date and time
+    if (updateCampData.date) {
+      updateCampData.date = moment(updateCampData.date, "YYYY-MM-DD").format(
+        "D MMM YY"
+      );
+    }
+
+    if (updateCampData.time) {
+      updateCampData.time = moment(updateCampData.time, "HH:mm:ss").format(
+        "h:mm A"
+      );
+    }
+
     console.log(updateCampData);
     try {
       const { data } = await axiosSecure.put(
@@ -59,7 +75,6 @@ const UpdateCampModal = ({ setIsEditModalOpen, isOpen, camp, refetch }) => {
       toast.error(err.message);
     }
   };
-
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog

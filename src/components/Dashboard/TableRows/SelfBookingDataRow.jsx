@@ -1,5 +1,7 @@
 import PropTypes from "prop-types";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { axiosSecure } from "../../../hooks/useAxiosSecure";
 import FeedbackModal from "../../Modal/FeedbackModal";
 const SelfBookingDataRow = ({
   booking,
@@ -7,7 +9,27 @@ const SelfBookingDataRow = ({
   isOpen,
   setIsOpen,
   closeModal,
+  campId,
+  setOpenModalId,
+  openModalId,
 }) => {
+  const [feedbacks, setFeedbacks] = useState([]);
+  // only get the current row data and id 
+  const data = feedbacks.filter((feedback) => feedback.campId === campId);
+  console.log(data);
+
+  // fetch feedbacks from the server
+  useEffect(() => {
+    axiosSecure
+      .get(`/feedbacks`)
+      .then((res) => {
+        setFeedbacks(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   return (
     <tr>
       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
@@ -48,19 +70,24 @@ const SelfBookingDataRow = ({
       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
         {/* add a feedback button green background white text */}
         <button
-          onClick={() => setIsOpen(true)}
+          onClick={() => {
+            setOpenModalId(booking._id);
+          }}
+          id={booking._id}
           className="bg-green-600 text-white px-3 py-1 rounded-md"
         >
           Feedback
         </button>
       </td>
       <FeedbackModal
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
+        isOpen={openModalId === booking._id}
+        setIsOpen={setOpenModalId}
         booking={booking}
-        closeModal={closeModal}
+        closeModal={() => setOpenModalId(null)}
+        campId={booking._id}
+        refetch={refetch}
+        title={booking?.camp_name}
       />
-
       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
         {/* circular cross button */}
         <button
@@ -94,6 +121,10 @@ SelfBookingDataRow.propTypes = {
   setIsOpen: PropTypes.func,
   isOpen: PropTypes.bool,
   closeModal: PropTypes.func,
+  campId: PropTypes.string,
+  data: PropTypes.object,
+  setOpenModalId: PropTypes.func,
+  openModalId: PropTypes.string,
 };
 
 export default SelfBookingDataRow;

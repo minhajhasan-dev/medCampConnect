@@ -1,4 +1,3 @@
-import { format } from "date-fns";
 import PropTypes from "prop-types";
 import { useState } from "react";
 import DeleteModal from "../../Modal/DeleteModal";
@@ -12,15 +11,10 @@ const CampDataRow = ({ camp, handleDelete, refetch }) => {
   const closeModal = () => {
     setIsOpen(false);
   };
-
+  console.log(camp);
   // format time in 12 h format
 
   // eslint-disable-next-line no-shadow
-  const convertTime12to24 = (time) => {
-    const [hours, minutes] = time.split(":");
-    return `${hours % 12 || 12}:${minutes} ${hours >= 12 ? "PM" : "AM"}`;
-  };
-  const time = convertTime12to24(camp?.time);
 
   return (
     <tr>
@@ -44,12 +38,10 @@ const CampDataRow = ({ camp, handleDelete, refetch }) => {
         </div>
       </td>
       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-        <p className="text-gray-900 whitespace-no-wrap">
-          {format(new Date(camp?.date), "dd MMM yyyy")}
-        </p>
+        <p className="text-gray-900 whitespace-no-wrap">{camp?.date}</p>
       </td>
       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-        <p className="text-gray-900 whitespace-no-wrap">{time}</p>
+        <p className="text-gray-900 whitespace-no-wrap">{camp?.time}</p>
       </td>
       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
         <p className="text-gray-900 whitespace-no-wrap">{camp?.location}</p>

@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
+import toast from "react-hot-toast";
 import { useParams } from "react-router-dom";
 import BookingModal from "../../components/Modal/BookingModal";
 import Container from "../../components/Shared/Container";
@@ -8,6 +9,7 @@ import Heading from "../../components/Shared/Heading";
 import LoadingSpinner from "../../components/Shared/LoadingSpinner";
 import useAuth from "../../hooks/useAuth";
 import useAxiosCommon from "../../hooks/useAxiosCommon";
+import { axiosSecure } from "../../hooks/useAxiosSecure";
 import useRole from "../../hooks/useRole";
 
 const CampDetails = () => {
@@ -27,9 +29,18 @@ const CampDetails = () => {
       return data;
     },
   });
+  console.log(camp);
 
-  console.log(role);
-
+  const { data: bookings = [] } = useQuery({
+    queryKey: ["bookings", user?.email],
+    queryFn: async () => {
+      const { data } = await axiosSecure(`/bookings/${user?.email}`);
+      return data;
+    },
+  });
+  console.log(bookings);
+  const isCampBooked = bookings.some((booking) => booking.campId === campId);
+  console.log(isCampBooked);
   if (isLoading) return <LoadingSpinner />;
   const closeModal = () => {
     setIsOpen(false);
@@ -100,7 +111,12 @@ const CampDetails = () => {
                 </table>
                 <button
                   disabled={role !== "participant"}
-                  onClick={() => setIsOpen(true)}
+                  onClick={() => {
+                    if (isCampBooked) {
+                      return toast.error("You have already booked this camp");
+                    }
+                    setIsOpen(true);
+                  }}
                   className={`w-full mt-4 px-4 py-2cursor-pointer bg-gray-100 ${
                     role === "participant"
                       ? "hover:bg-green-100"
