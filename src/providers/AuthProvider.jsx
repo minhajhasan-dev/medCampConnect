@@ -97,8 +97,10 @@ const AuthProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       if (currentUser) {
-        getToken(currentUser.email);
-        saveUser(currentUser);
+        setTimeout(() => {
+          getToken(currentUser.email);
+          saveUser(currentUser);
+        }, 1000);
       }
       setLoading(false);
     });
