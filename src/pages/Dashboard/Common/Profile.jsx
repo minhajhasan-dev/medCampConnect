@@ -1,11 +1,22 @@
+import { useQuery } from "@tanstack/react-query";
 import { Helmet } from "react-helmet-async";
 import LoadingSpinner from "../../../components/Shared/LoadingSpinner";
 import useAuth from "../../../hooks/useAuth";
+import { axiosSecure } from "../../../hooks/useAxiosSecure";
 import useRole from "../../../hooks/useRole";
 
 const Profile = () => {
   const { user, loading } = useAuth() || {};
   const [role, isLoading] = useRole();
+  // load a users from the database using tanstack react query and axios
+  const { data: userData = [] } = useQuery({
+    queryKey: ["user", user?.email],
+    queryFn: async () => {
+      const { data } = await axiosSecure(`/user/${user?.email}`);
+      return data;
+    },
+  });
+  console.log(userData);
 
   console.log(user);
   if (isLoading || loading) return <LoadingSpinner />;
@@ -25,7 +36,7 @@ const Profile = () => {
             <a href="#" className="relative block">
               <img
                 alt="profile"
-                src={user?.photoURL}
+                src={userData?.photo}
                 className="mx-auto object-cover rounded-full h-24 w-24  border-2 border-white "
               />
             </a>
@@ -34,18 +45,21 @@ const Profile = () => {
               {role}
             </p>
           </div>
-
           <div className="w-full p-2 mt-4 border rounded-lg">
-            <div className="flex flex-wrap items-center justify-between text-sm text-gray-600 ">
+            <div className="flex p-4 flex-wrap items-center justify-between text-sm text-gray-600 ">
               <p className="flex flex-col">
                 Name
-                <span className="font-bold text-black ">
-                  {user?.displayName}
-                </span>
+                <span className="font-bold text-black ">{userData?.name}</span>
               </p>
               <p className="flex flex-col">
                 Email
-                <span className="font-bold text-black ">{user?.email}</span>
+                <span className="font-bold text-black ">{userData?.email}</span>
+              </p>
+              <p className="flex flex-col">
+                Member Since
+                <span className="font-bold text-black ">
+                  {new Date(userData?.timestamp).toDateString()}
+                </span>
               </p>
             </div>
           </div>

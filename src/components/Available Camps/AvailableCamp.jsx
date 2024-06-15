@@ -48,14 +48,14 @@ const AvailableCamp = () => {
               type="text"
               placeholder="Search Camps..."
               name="search"
-              className="input input-bordered lg:w-96 md:w-auto w-36"
+              className="input input-bordered lg:w-96 md:w-auto w-36 bg-white shadow-md rounded-lg pl-3"
             />
           </div>
           <div className="form-control">
             <button
               type="button"
               onClick={handleChangeLayout}
-              className="btn hidden md:block w-full hover:bg-[#2B3440] bg-[#2B3440] text-white"
+              className="btn hidden md:block w-full text-white rounded-lg shadow-md bg-gradient-to-r from-green-400 to-green-500 hover:from-green-500 hover:to-green-600 transition-all duration-500 ease-in-out"
             >
               {" "}
               Change Layout
@@ -65,7 +65,7 @@ const AvailableCamp = () => {
             <select
               onChange={(e) => setSort(e.target.value)}
               value={sort}
-              className="select select-bordered  w-28 md:w-auto"
+              className="select select-bordered w-28 md:w-auto bg-white shadow-md rounded-lg pl-3"
             >
               <option value="most-registered">Most Registered</option>
               <option value="camp-fees"> Camp Fees</option>

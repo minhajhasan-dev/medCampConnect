@@ -8,6 +8,7 @@ import {
 } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import toast from "react-hot-toast";
+import ReactStars from "react-rating-stars-component";
 import useAuth from "../../hooks/useAuth";
 import { axiosSecure } from "../../hooks/useAxiosSecure";
 
@@ -80,17 +81,13 @@ const FeedbackModal = ({ closeModal, setIsOpen, isOpen, title, campId }) => {
                   <hr className="mt-3 " />
                   {/* rating here */}
                   <div className="mt-4 flex justify-center">
-                    {[1, 2, 3, 4, 5].map((star) => (
-                      <button
-                        key={star}
-                        className={`star ${
-                          rating >= star ? "star-selected" : ""
-                        } text-3xl text-gray-400 `}
-                        onClick={() => handleRatingChange(star)}
-                      >
-                        ★
-                      </button>
-                    ))}
+                    <ReactStars
+                      count={5}
+                      onChange={handleRatingChange}
+                      size={24}
+                      color2={"#ffd700"}
+                      value={rating}
+                    />
                   </div>
                   {/* a textarea for feedback */}
                   <textarea

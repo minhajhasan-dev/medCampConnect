@@ -37,14 +37,14 @@ const AddCamp = () => {
     const form = e.target;
     const camp_name = form.campName.value;
     const image = form.image.files[0];
-    const camp_fees = form.campFees.value;
+    const camp_fees = Number(form.campFees.value);
     const date = form.date.value;
     let formattedDate = moment(date).format("D MMM YY");
     const time = form.time.value;
     let formattedTime = moment(time, "HH:mm").format("h:mm A");
     const location = form.location.value;
     const healthcare_professional = form.healthcareProfessionalName.value;
-    const participant_count = form.participantCount.value;
+    const participant_count = Number(form.participantCount.value);
     const description = form.description.value;
 
     console.log(date, time);

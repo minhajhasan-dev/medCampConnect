@@ -1,7 +1,7 @@
 // import { Calendar } from 'react-date-range'
 import { useQuery } from "@tanstack/react-query";
 import { FaCampground, FaDollarSign } from "react-icons/fa";
-import SalesLineChart from "../../../components/Dashboard/SalesLineChart";
+import JoiningsLineChart from "../../../components/Dashboard/JoiningsLineChart";
 import LoadingSpinner from "../../../components/Shared/LoadingSpinner";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
@@ -67,7 +67,7 @@ const ParticipantStatistics = () => {
           {/* Total Sales Graph */}
           <div className="relative  flex flex-col bg-clip-border rounded-xl bg-white w-[40.5rem] text-gray-700 shadow-md overflow-hidden xl:col-span-2">
             {/* Render Chart Here */}
-            <SalesLineChart data={statData?.chartData} />
+            <JoiningsLineChart data={statData?.chartData} />
           </div>
         </div>
       </div>

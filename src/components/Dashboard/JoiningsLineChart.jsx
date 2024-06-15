@@ -9,7 +9,7 @@ const options = {
   legend: { position: "bottom" },
   series: [{ color: "#F43F5E" }],
 };
-const SalesLineChart = ({ data }) => {
+const JoiningsLineChart = ({ data }) => {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     setTimeout(() => setLoading(false), 1000);
@@ -38,8 +38,8 @@ const SalesLineChart = ({ data }) => {
   );
 };
 
-SalesLineChart.propTypes = {
+JoiningsLineChart.propTypes = {
   data: PropTypes.array,
 };
 
-export default SalesLineChart;
+export default JoiningsLineChart;

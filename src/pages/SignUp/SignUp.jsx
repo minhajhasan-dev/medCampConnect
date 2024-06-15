@@ -33,6 +33,7 @@ const SignUp = () => {
 
       // 3. Save username and photo in firebase
       await updateUserProfile(name, image_url);
+
       navigate("/");
       toast.success("Signup Successful");
     } catch (err) {
@@ -45,7 +46,6 @@ const SignUp = () => {
   const handleGoogleSignIn = async () => {
     try {
       await signInWithGoogle();
-
       navigate("/");
       toast.success("Signup Successful");
     } catch (err) {

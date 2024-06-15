@@ -1,6 +1,7 @@
 import { Helmet } from "react-helmet-async";
 import Banner from "../../components/Banner/Banner";
 import PopularCamps from "../../components/Popular Camps/PopularCamps";
+import FeedBacks from "../../components/FeedBacks/FeedBacks";
 
 const Home = () => {
   return (
@@ -16,6 +17,7 @@ const Home = () => {
       {/* <Rooms /> */}
       {/* Popular Camps Section */}
       <PopularCamps />
+      <FeedBacks />
     </div>
   );
 };

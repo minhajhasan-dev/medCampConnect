@@ -4,7 +4,7 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 import LoadingSpinner from "../../../components/Shared/LoadingSpinner";
 
-import UserDataRow from "../../../components/Dashboard/TableRows/SelfBookingDataRow";
+import CombinedBookingDataRow from "../../../components/Dashboard/TableRows/CombinedBookingDataRow";
 const ManageRegisteredCamps = () => {
   const axiosSecure = useAxiosSecure();
   //   Fetch  Data
@@ -75,10 +75,12 @@ const ManageRegisteredCamps = () => {
                 </thead>
                 <tbody>
                   {bookings.map((booking) => (
-                    <UserDataRow
+                    <CombinedBookingDataRow
                       key={booking?._id}
                       booking={booking}
+                      userEmail={booking?.participant_email}
                       refetch={refetch}
+                      campId={booking?.campId}
                     />
                   ))}
                 </tbody>
