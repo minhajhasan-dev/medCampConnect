@@ -42,7 +42,11 @@ const AvailableCamp = () => {
         onSubmit={handleSearch}
         className="navbar justify-center form my-5 bg-base-100 px-3 mx-auto "
       >
-        <div className="flex-none gap-2">
+        <div
+          data-aos="flip-left"
+          data-aos-duration="1000"
+          className="flex-none gap-2"
+        >
           <div className="form-control">
             <input
               type="text"
