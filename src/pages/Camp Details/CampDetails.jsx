@@ -67,7 +67,7 @@ const CampDetails = () => {
           <div className="mt-6 grid grid-cols-1 md:grid-cols-7 md:gap-10">
             <div className="col-span-4 flex flex-col gap-8">
               <div className="text-xl font-semibold text-gray-700">
-                Organized by {camp.healthcare_professional}
+                Managed by {camp.healthcare_professional}
               </div>
               <div className="text-lg font-light text-gray-700 leading-relaxed">
                 {camp.description}

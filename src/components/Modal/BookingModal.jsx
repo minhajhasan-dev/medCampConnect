@@ -162,7 +162,6 @@ const BookingModal = ({ closeModal, isOpen, bookingInfo, refetch }) => {
                       <option value="male">Male</option>
                       <option value="female">Female</option>
                     </Select>
-                    {/* add a select input with 2 item */}
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700">

@@ -53,13 +53,14 @@ const Sidebar = () => {
       >
         <div>
           <div>
-            <div className="w-full hidden md:flex px-4 py-2 shadow-lg rounded-lg justify-center items-center  mx-auto">
+            <div className="w-full hidden md:flex px-4 py-2  rounded-lg justify-center items-center  mx-auto">
               <Link to="/">
                 {" "}
                 <div className="flex items-baseline gap-2">
                   <img src={logo} alt="logo" width="25" height="50" />
                   <h1 className="text-xl font-semibold">MedCampConnect</h1>
                 </div>
+                <hr className="mt-4" />
               </Link>
             </div>
           </div>

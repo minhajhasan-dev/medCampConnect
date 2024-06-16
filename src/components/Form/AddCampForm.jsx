@@ -2,7 +2,7 @@
 /* eslint-disable react/prop-types */
 import { format } from "date-fns";
 import { useForm } from "react-hook-form";
-import { TbFidgetSpinner } from "react-icons/tb";
+import { PiSpinnerBallFill } from "react-icons/pi";
 
 const AddCampForm = ({
   dates,
@@ -74,7 +74,7 @@ const AddCampForm = ({
                   </label>
                 </div>
               </div>
-              <div className="h-16 w-16 object-cover overflow-hidden flex items-center rounded-md border border-gray-300">
+              <div className="h-16 w-24 object-cover overflow-hidden flex items-center rounded-md border border-gray-300">
                 {imagePreview && <img src={imagePreview} alt="Preview" />}
               </div>
             </div>
@@ -205,7 +205,7 @@ const AddCampForm = ({
           }`}
         >
           {loading ? (
-            <TbFidgetSpinner className="animate-spin m-auto" />
+            <PiSpinnerBallFill className="animate-spin m-auto" />
           ) : (
             "Save & Continue"
           )}

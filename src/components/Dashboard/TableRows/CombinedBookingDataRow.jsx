@@ -1,11 +1,17 @@
 import PropTypes from "prop-types";
+import { useState } from "react";
 import toast from "react-hot-toast";
 import { axiosSecure } from "../../../hooks/useAxiosSecure";
+import DeleteModal from "../../Modal/DeleteModal";
 
 const CombinedBookingDataRow = ({ booking, refetch, campId, userEmail }) => {
   console.log(campId);
   console.log(userEmail);
   // delete booking
+  const [isOpen, setIsOpen] = useState(false);
+  const closeModal = () => {
+    setIsOpen(false);
+  };
 
   const handleDelete = async () => {
     try {
@@ -55,7 +61,7 @@ const CombinedBookingDataRow = ({ booking, refetch, campId, userEmail }) => {
       </td>
       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
         {/* circular cross button */}
-        <button onClick={handleDelete}>
+        <button onClick={() => setIsOpen(true)}>
           {" "}
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -72,6 +78,13 @@ const CombinedBookingDataRow = ({ booking, refetch, campId, userEmail }) => {
             />
           </svg>
         </button>
+        {/* Delete modal */}
+        <DeleteModal
+          isOpen={isOpen}
+          closeModal={closeModal}
+          handleDelete={handleDelete}
+          id={campId}
+        />
       </td>
     </tr>
   );

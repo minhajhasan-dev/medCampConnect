@@ -1,5 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 import { Helmet } from "react-helmet-async";
+import UpdateProfileModal from "../../../components/Modal/UpdateProfileModal";
 import LoadingSpinner from "../../../components/Shared/LoadingSpinner";
 import useAuth from "../../../hooks/useAuth";
 import { axiosSecure } from "../../../hooks/useAxiosSecure";
@@ -8,8 +10,11 @@ import useRole from "../../../hooks/useRole";
 const Profile = () => {
   const { user, loading } = useAuth() || {};
   const [role, isLoading] = useRole();
+
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
   // load a users from the database using tanstack react query and axios
-  const { data: userData = [] } = useQuery({
+  const { data: userData = [], refetch } = useQuery({
     queryKey: ["user", user?.email],
     queryFn: async () => {
       const { data } = await axiosSecure(`/user/${user?.email}`);
@@ -45,8 +50,8 @@ const Profile = () => {
               {role}
             </p>
           </div>
-          <div className="w-full p-2 mt-4 border rounded-lg">
-            <div className="flex p-4 flex-wrap items-center justify-between text-sm text-gray-600 ">
+          <div className="w-full md:p-2 mt-4 border rounded-lg">
+            <div className="flex md:p-4 flex-wrap items-center justify-between text-sm text-gray-600 ">
               <p className="flex flex-col">
                 Name
                 <span className="font-bold text-black ">{userData?.name}</span>
@@ -65,9 +70,20 @@ const Profile = () => {
           </div>
           {/* an update button to update those information */}
           <div className="flex justify-center w-full">
-            <button className="bg-green-600 text-white px-4 py-2 mt-4 rounded-lg">
+            <button
+              onClick={() => setIsEditModalOpen(true)}
+              className="bg-green-600 text-white px-4 py-2 mt-4 rounded-lg"
+            >
               Update Profile
             </button>
+            {/* Update Modal */}
+            <UpdateProfileModal
+              isOpen={isEditModalOpen}
+              setIsEditModalOpen={setIsEditModalOpen}
+              onClose={() => setIsEditModalOpen(false)}
+              refetch={refetch}
+              userData={userData}
+            />
           </div>
         </div>
       </div>

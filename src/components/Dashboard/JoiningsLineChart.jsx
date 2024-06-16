@@ -19,7 +19,7 @@ const JoiningsLineChart = ({ data }) => {
     <>
       {loading ? (
         <LoadingSpinner smallHeight />
-      ) : data.length > 0 ? (
+      ) : data.length > 1 ? (
         <Chart
           chartType="LineChart"
           width="100%"
