@@ -56,7 +56,11 @@ const SignUp = () => {
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-green-50">
-      <div className="flex flex-col max-w-md p-6 rounded-md sm:p-10 bg-white text-gray-900 shadow-lg">
+      <div
+        data-aos="zoom-in-down"
+        data-aos-duration="1000"
+        className="flex flex-col max-w-md p-6 rounded-md sm:p-10 bg-white text-gray-900 shadow-lg"
+      >
         <div className="mb-8 text-center">
           <h1 className="my-3 text-4xl font-bold text-green-700">Sign Up</h1>
           <p className="text-sm text-gray-400">Welcome to MedCampConnect</p>
