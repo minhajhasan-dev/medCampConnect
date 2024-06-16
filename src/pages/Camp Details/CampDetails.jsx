@@ -69,7 +69,11 @@ const CampDetails = () => {
           </div>
           {/* Camp Details */}
           <div className="mt-6 grid grid-cols-1 md:grid-cols-7 md:gap-10">
-            <div className="col-span-4 flex flex-col gap-8">
+            <div
+              data-aos="fade-right"
+              data-aos-duration="1000"
+              className="col-span-4 flex flex-col gap-8"
+            >
               <div className="text-xl font-semibold text-gray-700">
                 Managed by {camp.healthcare_professional}
               </div>
@@ -77,7 +81,11 @@ const CampDetails = () => {
                 {camp.description}
               </div>
             </div>
-            <div className="col-span-3 order-first md:order-last mb-10 md:mb-0">
+            <div
+              data-aos="fade-left"
+              data-aos-duration="1000"
+              className="col-span-3 order-first md:order-last mb-10 md:mb-0"
+            >
               {/* Join Camp Section */}
               <div className="p-6 border rounded-lg shadow-md bg-gray-50">
                 <h2 className="text-xl font-semibold mb-4">
