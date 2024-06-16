@@ -55,7 +55,11 @@ const CampDetails = () => {
           {/* Header */}
           <div className="flex flex-col gap-6">
             <Heading title={camp.camp_name} subtitle={camp.location} />
-            <div className="w-full h-64 md:h-96 overflow-hidden rounded-lg">
+            <div
+              data-aos="zoom-in"
+              data-aos-duration="1000"
+              className="w-full h-64 md:h-96 overflow-hidden rounded-lg"
+            >
               <img
                 className="object-cover w-full h-full"
                 src={camp.image}
