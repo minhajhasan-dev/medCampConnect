@@ -30,7 +30,11 @@ const Profile = () => {
       <Helmet>
         <title>Profile</title>
       </Helmet>
-      <div className="bg-white shadow-lg rounded-2xl w-3/5">
+      <div
+        data-aos="fade-right"
+        data-aos-duration="1000"
+        className="bg-white shadow-lg rounded-2xl w-3/5"
+      >
         <img
           alt="profile"
           src="https://i.ytimg.com/vi/pv8gfg4_9ak/maxresdefault.jpg"

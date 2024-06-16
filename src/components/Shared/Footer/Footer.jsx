@@ -17,16 +17,16 @@ const Footer = () => {
           </p>
         </div>
         <div className="flex space-x-4">
-          <a href="#" className="text-lg">
+          <a href="#" className="text-lg hover:animate-pulse">
             <FaFacebookF />
           </a>
-          <a href="#" className="text-lg">
+          <a href="#" className="text-lg hover:animate-pulse">
             <FaTwitter />
           </a>
-          <a href="#" className="text-lg">
+          <a href="#" className="text-lg hover:animate-pulse">
             <FaInstagram />
           </a>
-          <a href="#" className="text-lg">
+          <a href="#" className="text-lg hover:animate-pulse">
             <FaLinkedinIn />
           </a>
         </div>

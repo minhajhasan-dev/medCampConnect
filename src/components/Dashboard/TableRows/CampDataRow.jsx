@@ -17,8 +17,17 @@ const CampDataRow = ({ camp, handleDelete, refetch }) => {
   // eslint-disable-next-line no-shadow
 
   return (
-    <tr>
-      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+    <tr
+      data-aos="fade-zoom-in"
+      data-aos-easing="ease-in-back"
+      data-aos-delay="300"
+      data-aos-offset="0"
+    >
+      <td
+        data-aos="fade-right"
+        data-aos-duration="1000"
+        className="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+      >
         <div className="flex items-center">
           <div className="flex-shrink-0">
             <div className="block relative">
@@ -37,21 +46,41 @@ const CampDataRow = ({ camp, handleDelete, refetch }) => {
           </div>
         </div>
       </td>
-      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+      <td
+        data-aos="fade-right"
+        data-aos-duration="1000"
+        className="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+      >
         <p className="text-gray-900 whitespace-no-wrap">{camp?.date}</p>
       </td>
-      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+      <td
+        data-aos="fade-right"
+        data-aos-duration="1000"
+        className="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+      >
         <p className="text-gray-900 whitespace-no-wrap">{camp?.time}</p>
       </td>
-      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+      <td
+        data-aos="fade-right"
+        data-aos-duration="1000"
+        className="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+      >
         <p className="text-gray-900 whitespace-no-wrap">{camp?.location}</p>
       </td>
-      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+      <td
+        data-aos="fade-right"
+        data-aos-duration="1000"
+        className="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+      >
         <p className="text-gray-900 whitespace-no-wrap">
           {camp?.healthcare_professional}
         </p>
       </td>
-      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+      <td
+        data-aos="fade-right"
+        data-aos-duration="1000"
+        className="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+      >
         <button
           onClick={() => setIsOpen(true)}
           className="relative cursor-pointer inline-block px-3 py-1 font-semibold text-green-900 leading-tight"
@@ -70,7 +99,11 @@ const CampDataRow = ({ camp, handleDelete, refetch }) => {
           id={camp?._id}
         />
       </td>
-      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+      <td
+        data-aos="fade-right"
+        data-aos-duration="1000"
+        className="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+      >
         <button
           onClick={() => setIsEditModalOpen(true)}
           className="relative cursor-pointer inline-block px-3 py-1 font-semibold text-green-900 leading-tight"

@@ -43,7 +43,7 @@ const ManageCamps = () => {
       console.log(err);
     }
   };
-  
+
   if (isLoading) return <LoadingSpinner />;
   return (
     <>

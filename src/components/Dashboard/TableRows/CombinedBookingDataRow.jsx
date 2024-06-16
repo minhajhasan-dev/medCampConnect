@@ -23,26 +23,39 @@ const CombinedBookingDataRow = ({ booking, refetch, campId, userEmail }) => {
     }
   };
   return (
-    <tr>
-      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+    <tr
+      data-aos="fade-zoom-in"
+      data-aos-easing="ease-in-back"
+      data-aos-delay="300"
+      data-aos-offset="0"
+    >
+      <td
+        data-aos="fade-right"
+        data-aos-duration="1000"
+        className="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+      >
         <p className="text-gray-900 whitespace-no-wrap">
           {booking?.participant_name}
         </p>
       </td>
-      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+      <td data-aos="fade-right"
+        data-aos-duration="1000" className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
         <p className="text-gray-900 whitespace-no-wrap">{booking?.camp_name}</p>
       </td>
-      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+      <td data-aos="fade-right"
+        data-aos-duration="1000" className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
         <p className="text-gray-900 whitespace-no-wrap">
           ${booking?.camp_fees}
         </p>
       </td>
-      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+      <td data-aos="fade-right"
+        data-aos-duration="1000" className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
         <p className="text-gray-900 whitespace-no-wrap">
           {booking?.transactionId ? "Paid" : "Not Paid"}
         </p>
       </td>
-      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+      <td data-aos="fade-right"
+        data-aos-duration="1000" className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
         <p className="text-gray-900 whitespace-no-wrap">
           {booking?.transactionId ? (
             "Confirmed"
@@ -59,7 +72,8 @@ const CombinedBookingDataRow = ({ booking, refetch, campId, userEmail }) => {
           )}
         </p>
       </td>
-      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+      <td data-aos="fade-right"
+        data-aos-duration="1000" className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
         {/* circular cross button */}
         <button onClick={() => setIsOpen(true)}>
           {" "}

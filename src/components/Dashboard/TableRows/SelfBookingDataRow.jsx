@@ -32,25 +32,30 @@ const SelfBookingDataRow = ({
 
   return (
     <tr>
-      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+      <td   data-aos="fade-right"
+        data-aos-duration="1000" className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
         <p className="text-gray-900 whitespace-no-wrap">
           {booking?.participant_name}
         </p>
       </td>
-      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+      <td   data-aos="fade-right"
+        data-aos-duration="1000" className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
         <p className="text-gray-900 whitespace-no-wrap">{booking?.camp_name}</p>
       </td>
-      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+      <td   data-aos="fade-right"
+        data-aos-duration="1000" className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
         <p className="text-gray-900 whitespace-no-wrap">
           ${booking?.camp_fees}
         </p>
       </td>
-      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+      <td   data-aos="fade-right"
+        data-aos-duration="1000" className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
         <p className="text-gray-900 whitespace-no-wrap">
           {booking?.transactionId ? "Paid" : "Not Paid"}
         </p>
       </td>
-      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+      <td   data-aos="fade-right"
+        data-aos-duration="1000" className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
         <p className="text-gray-900 whitespace-no-wrap">
           {booking?.transactionId ? (
             "Confirmed"
@@ -67,7 +72,8 @@ const SelfBookingDataRow = ({
           )}
         </p>
       </td>
-      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+      <td   data-aos="fade-right"
+        data-aos-duration="1000" className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
         {/* add a feedback button green background white text */}
         <button
           onClick={() => {
@@ -88,7 +94,8 @@ const SelfBookingDataRow = ({
         refetch={refetch}
         title={booking?.camp_name}
       />
-      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+      <td   data-aos="fade-right"
+        data-aos-duration="1000" className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
         {/* circular cross button */}
         <button
           onClick={() => {

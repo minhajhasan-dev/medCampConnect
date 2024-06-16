@@ -68,7 +68,7 @@ const Sidebar = () => {
           {/* Nav Items */}
           <div className="flex flex-col justify-between flex-1 mt-6">
             {/*  Menu Items */}
-            <nav>
+            <nav data-aos="zoom-in-down" data-aos-duration="1000">
               {/* Profile Menu */}
               <MenuItem label="Profile" address="/dashboard" icon={FaUser} />
 

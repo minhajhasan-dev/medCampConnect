@@ -26,6 +26,8 @@ const AddCampForm = ({
   return (
     <div className="w-full min-h-[calc(100vh-40px)] flex flex-col justify-center items-center bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl p-6 shadow-lg">
       <form
+        data-aos="fade-right"
+        data-aos-duration="1000"
         onSubmit={handleSubmitCamp}
         className="bg-white p-8 rounded-lg shadow-md w-full max-w-4xl"
       >
