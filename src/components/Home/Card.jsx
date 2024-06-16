@@ -11,6 +11,8 @@ import { Link } from "react-router-dom";
 const Card = ({ camp }) => {
   return (
     <Link
+      data-aos="zoom-in-down"
+      data-aos-duration="1000"
       to={`/camp-details/${camp?._id}`}
       className="col-span-1 border p-3 bg-[#eeeeee36] rounded-2xl cursor-pointer group hover:shadow-lg transform hover:scale-105 transition-all duration-300 ease-in-out"
     >

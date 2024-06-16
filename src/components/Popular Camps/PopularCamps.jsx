@@ -8,7 +8,7 @@ const PopularCamps = () => {
   return (
     <Container>
       <SectionTitle headline="Popular Medical Camps" />
-      <Camps />
+      <Camps/>
       <div className=" mb-5 flex justify-center mt-5 items-center">
         <Link to="/available-camps">
           <Button
