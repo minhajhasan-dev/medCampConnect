@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { FcGoogle } from "react-icons/fc";
 import { PiSpinnerBallFill } from "react-icons/pi";
@@ -9,15 +9,19 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const from = location?.state || "/";
-  const { signInWithGoogle, signIn, loading, setLoading, resetPassword } =
-    useAuth();
-  const [email, setEmail] = useState("");
+  const { signInWithGoogle, signIn, loading, setLoading } = useAuth();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const form = e.target;
-    const email = form.email.value;
-    const password = form.password.value;
+  // react hook form here
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const handleSignIn = async (data) => {
+    console.log(data);
+    const email = data.email;
+    const password = data.password;
 
     try {
       setLoading(true);
@@ -30,20 +34,6 @@ const Login = () => {
       toast.error(err.message);
       setLoading(false);
     }
-  };
-
-  const handleResetPassword = async () => {
-    if (!email) return toast.error("Please write your email first!");
-    try {
-      await resetPassword(email);
-      toast.success("Request Success! Check your email for further process...");
-      setLoading(false);
-    } catch (err) {
-      console.log(err);
-      toast.error(err.message);
-      setLoading(false);
-    }
-    console.log(email);
   };
 
   // handle google signin
@@ -73,7 +63,7 @@ const Login = () => {
           </p>
         </div>
         <form
-          onSubmit={handleSubmit}
+          onSubmit={handleSubmit(handleSignIn)}
           className="space-y-6 ng-untouched ng-pristine ng-valid"
         >
           <div className="space-y-4">
@@ -82,15 +72,23 @@ const Login = () => {
                 Email address
               </label>
               <input
+                {...register("email", {
+                  required: "Email is required",
+                  pattern: {
+                    value: /\S+@\S+\.\S+/,
+                    message: "Entered value does not match email format",
+                  },
+                })}
                 type="email"
                 name="email"
-                onBlur={(e) => setEmail(e.target.value)}
                 id="email"
-                required
                 placeholder="Enter Your Email Here"
                 className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-blue-500 bg-gray-200 text-gray-900"
                 data-temp-mail-org="0"
               />
+              {errors.email && (
+                <p className="text-red-500 text-sm">{errors.email.message}</p>
+              )}
             </div>
             <div>
               <div className="flex justify-between">
@@ -99,14 +97,25 @@ const Login = () => {
                 </label>
               </div>
               <input
+                {...register("password", {
+                  required: "Password is required",
+                  minLength: {
+                    value: 6,
+                    message: "Password must have at least 6 characters",
+                  },
+                })}
                 type="password"
                 name="password"
                 autoComplete="current-password"
                 id="password"
-                required
                 placeholder="*******"
                 className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-blue-500 bg-gray-200 text-gray-900"
               />
+              {errors.password && (
+                <p className="text-red-500 text-sm">
+                  {errors.password.message}
+                </p>
+              )}
             </div>
           </div>
 
@@ -124,14 +133,7 @@ const Login = () => {
             </button>
           </div>
         </form>
-        <div className="space-y-1">
-          <button
-            onClick={handleResetPassword}
-            className="text-xs hover:underline hover:text-blue-500 text-gray-400"
-          >
-            Forgot password?
-          </button>
-        </div>
+
         <div className="flex items-center pt-4 space-x-1">
           <div className="flex-1 h-px sm:w-16 dark:bg-gray-700"></div>
           <p className="px-3 text-sm dark:text-gray-400">

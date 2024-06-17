@@ -49,7 +49,7 @@ const AuthProvider = ({ children }) => {
 
   const logOut = async () => {
     setLoading(true);
-    await axios.get(`${import.meta.env.VITE_API_URL}/logout`, {
+    await axios.post(`https://medcampconnect-web-server.vercel.app/logout`, {
       withCredentials: true,
     });
     return signOut(auth);
@@ -65,7 +65,7 @@ const AuthProvider = ({ children }) => {
   // Get token from server
   const getToken = async (email) => {
     const { data } = await axios.post(
-      `${import.meta.env.VITE_API_URL}/jwt`,
+      `https://medcampconnect-web-server.vercel.app/jwt`,
       { email },
       { withCredentials: true }
     );
@@ -82,7 +82,7 @@ const AuthProvider = ({ children }) => {
 
     console.log(currentUser);
     const { data } = await axios.put(
-      `${import.meta.env.VITE_API_URL}/user`,
+      `https://medcampconnect-web-server.vercel.app/user`,
       currentUser,
       {
         withCredentials: true,

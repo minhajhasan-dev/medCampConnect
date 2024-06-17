@@ -27,14 +27,11 @@ const AvailableCamp = () => {
     e.preventDefault();
     const text = e.target.search.value || " ";
     setSearch(text);
-    console.log(text);
   };
 
   const handleChangeLayout = () => {
     setLayout(layout === 3 ? 2 : 3);
-    console.log(layout);
   };
-  console.log(sort);
   return (
     <Container>
       {/* sub nav here */}

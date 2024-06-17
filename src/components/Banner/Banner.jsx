@@ -40,7 +40,7 @@ const Banner = () => {
           clickable: true,
         }}
         modules={[FreeMode, Pagination, Autoplay]}
-        loop={true}
+        loop={SliderData.length > 1}
         autoplay={{
           delay: 2500,
           disableOnInteraction: false,

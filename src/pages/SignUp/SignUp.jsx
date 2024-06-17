@@ -1,3 +1,4 @@
+import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { FcGoogle } from "react-icons/fc";
 import { PiSpinnerBallFill } from "react-icons/pi";
@@ -15,13 +16,19 @@ const SignUp = () => {
     setLoading,
   } = useAuth();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const form = e.target;
-    const name = form.name.value;
-    const email = form.email.value;
-    const password = form.password.value;
-    const image = form.image.files[0];
+  // react hook form here
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const handleSignUp = async (data) => {
+    console.log(data);
+    const name = data.name;
+    const email = data.email;
+    const password = data.password;
+    const image = data.image[0];
 
     try {
       setLoading(true);
@@ -65,13 +72,23 @@ const SignUp = () => {
           <h1 className="my-3 text-4xl font-bold text-green-700">Sign Up</h1>
           <p className="text-sm text-gray-400">Welcome to MedCampConnect</p>
         </div>
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit(handleSignUp)} className="space-y-6">
           <div className="space-y-4">
             <div>
               <label htmlFor="email" className="block mb-2 text-sm">
                 Name
               </label>
               <input
+                {...register("name", {
+                  required: {
+                    value: true,
+                    message: "Name is required",
+                  },
+                  minLength: {
+                    value: 3,
+                    message: "Name should have at least 3 characters",
+                  },
+                })}
                 type="text"
                 name="name"
                 id="name"
@@ -79,32 +96,56 @@ const SignUp = () => {
                 className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-green-500 bg-gray-200 text-gray-900"
                 data-temp-mail-org="0"
               />
+              {errors.name && (
+                <span className="text-red-500 text-sm">
+                  {errors.name.message}
+                </span>
+              )}
             </div>
             <div>
               <label htmlFor="image" className="block mb-2 text-sm">
                 Select Image:
               </label>
               <input
-                required
+                {...register("image", { required: "Image is required" })}
                 type="file"
                 id="image"
                 name="image"
                 accept="image/*"
               />
             </div>
+            {errors.image && (
+              <span className="text-red-500 text-sm">
+                {errors.image.message}
+              </span>
+            )}
             <div>
               <label htmlFor="email" className="block mb-2 text-sm">
                 Email address
               </label>
               <input
+                {...register("email", {
+                  required: {
+                    value: true,
+                    message: "Email is required",
+                  },
+                  pattern: {
+                    value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+                    message: "Invalid email address",
+                  },
+                })}
                 type="email"
                 name="email"
                 id="email"
-                required
                 placeholder="Enter Your Email Here"
                 className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-green-500 bg-gray-200 text-gray-900"
                 data-temp-mail-org="0"
               />
+              {errors.email && (
+                <span className="text-red-500 text-sm">
+                  {errors.email.message}
+                </span>
+              )}
             </div>
             <div>
               <div className="flex justify-between">
@@ -113,14 +154,33 @@ const SignUp = () => {
                 </label>
               </div>
               <input
+                {...register("password", {
+                  required: {
+                    value: true,
+                    message: "Password is required",
+                  },
+                  minLength: {
+                    value: 6,
+                    message: "Password should have at least 6 characters",
+                  },
+                  pattern: {
+                    value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/,
+                    message:
+                      "Password should have at least one letter and one number",
+                  },
+                })}
                 type="password"
                 name="password"
                 autoComplete="new-password"
                 id="password"
-                required
                 placeholder="*******"
                 className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-green-500 bg-gray-200 text-gray-900"
               />
+              {errors.password && (
+                <span className="text-red-500 text-sm">
+                  {errors.password.message}
+                </span>
+              )}
             </div>
           </div>
 
