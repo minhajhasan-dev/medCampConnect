@@ -7,6 +7,7 @@ import { FaUser } from "react-icons/fa6";
 import { IoLogOut } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import logo from "../../../assets/images/logo.png";
+import avatarImg from "../../../assets/images/placeholder.jpg";
 import useAuth from "../../../hooks/useAuth";
 import { axiosSecure } from "../../../hooks/useAxiosSecure";
 import Container from "../Container";
@@ -71,22 +72,26 @@ const Navbar = () => {
                   </>
                 </div>
                 {/* Dropdown btn */}
-                {user && <div
-                  onClick={() => setIsOpen(!isOpen)}
-                  // make the style different in look
-                  className="p-4 md:py-1 md:px-2  flex flex-row items-center gap-3  cursor-pointer  transition"
-                >
-                  <AiOutlineMenu className="md:hidden" />
-                  <div className="hidden md:block ">
-                    {/* Avatar */}
-                    <img
-                      className="h-10 w-10 object-cover rounded-full"
-                      referrerPolicy="no-referrer"
-                      src={user && userData.photo}
-                      alt="profile"
-                    />
+                {user && (
+                  <div
+                    onClick={() => setIsOpen(!isOpen)}
+                    // make the style different in look
+                    className="p-4 md:py-1 md:px-2  flex flex-row items-center gap-3  cursor-pointer  transition"
+                  >
+                    <AiOutlineMenu className="md:hidden" />
+                    <div className="hidden md:block ">
+                      {/* Avatar */}
+                      <img
+                        className="h-10 w-10 object-cover rounded-full"
+                        referrerPolicy="no-referrer"
+                        src={
+                          user && userData.photo ? userData.photo : avatarImg
+                        }
+                        alt="profile"
+                      />
+                    </div>
                   </div>
-                </div>}
+                )}
               </div>
               {isOpen && user && (
                 <div className="absolute rounded-xl shadow-md w-[40vw] md:w-[10vw] bg-white overflow-hidden right-0 top-12 text-sm">
