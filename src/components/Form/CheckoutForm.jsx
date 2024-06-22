@@ -16,6 +16,8 @@ const CheckoutForm = ({ closeModal, bookingInfo, formData, refetch }) => {
   const [clientSecret, setClientSecret] = useState();
   const [cardError, setCardError] = useState("");
   const [processing, setProcessing] = useState(false);
+  const [paymentDeclined, setPaymentDeclined] = useState(false);
+  const [existingBooking, setExistingBooking] = useState({});
 
   console.log(formData);
   useEffect(() => {
@@ -26,6 +28,17 @@ const CheckoutForm = ({ closeModal, bookingInfo, formData, refetch }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [bookingInfo?.price]);
 
+  axiosSecure.get(`/bookings/${user?.email}`).then((res) => {
+    const bookings = res.data;
+    const existingBooking = bookings.find(
+      (booking) => booking.camp_name === bookingInfo.camp_name
+    );
+    if (existingBooking) {
+      console.log("Existing booking found:", existingBooking);
+      setExistingBooking(existingBooking);
+    }
+  });
+
   //   get clientSecret
   const getClientSecret = async (price) => {
     const { data } = await axiosSecure.post(`/create-payment-intent`, price);
@@ -34,18 +47,12 @@ const CheckoutForm = ({ closeModal, bookingInfo, formData, refetch }) => {
   };
 
   const handleSubmit = async (event) => {
-    // Block native form submission.
     event.preventDefault();
     setProcessing(true);
     if (!stripe || !elements) {
-      // Stripe.js has not loaded yet. Make sure to disable
-      // form submission until Stripe.js has loaded.
       return;
     }
 
-    // Get a reference to a mounted CardElement. Elements knows how
-    // to find your CardElement because there can only ever be one of
-    // each type of element.
     const card = elements.getElement(CardElement);
 
     if (card == null) {
@@ -80,28 +87,36 @@ const CheckoutForm = ({ closeModal, bookingInfo, formData, refetch }) => {
         },
       });
 
+    let paymentStatus = "Unpaid";
+
     if (confirmError) {
       console.log(confirmError);
       setCardError(confirmError.message);
+      setPaymentDeclined(true); // Update this when payment is declined
       setProcessing(false);
       return;
-    }
-
-    if (paymentIntent.status === "succeeded") {
+    } else if (paymentIntent && paymentIntent.status === "succeeded") {
       console.log(paymentIntent);
+      paymentStatus = "Paid";
+
       // 1. Create payment info object
       const paymentInfo = {
         ...bookingInfo,
         ...formData,
         campId: bookingInfo._id,
-        transactionId: paymentIntent.id,
+        transactionId: paymentIntent ? paymentIntent.id : "N/A",
         date: new Date(),
-        payment_status: "Pending",
+        payment_status: paymentStatus,
       };
       delete paymentInfo._id;
       console.log(paymentInfo);
       try {
+        await axiosSecure.delete(
+          `/booking/${existingBooking.participant_email}/${existingBooking.campId}`
+        );
+
         // 2. save payment info in booking collection (db)
+
         const { data } = await axiosSecure.post("/bookings", paymentInfo);
         console.log(data);
 
@@ -117,17 +132,45 @@ const CheckoutForm = ({ closeModal, bookingInfo, formData, refetch }) => {
         // update ui
         refetch();
         closeModal();
-        toast.success("Camp Booked Successfully!");
+        toast.success(
+          `Camp Booked Successfully! Payment Status: ${paymentStatus}`
+        );
         navigate("/dashboard/registered-camps");
       } catch (err) {
         console.log(err);
       }
     }
-    else{
-      toast.error("Payment Failed");
-    }
 
     setProcessing(false);
+  };
+
+  const handlePayLater = async () => {
+    // Prepare the booking information with an "Unpaid" status
+    const bookingInfoWithUnpaidStatus = {
+      ...bookingInfo,
+      ...formData,
+      campId: bookingInfo._id,
+      date: new Date(),
+      payment_status: "Unpaid",
+    };
+    delete bookingInfoWithUnpaidStatus._id; // Remove if _id is not needed or should not be duplicated
+
+    try {
+      // Save the booking information to the database
+      const { data } = await axiosSecure.post(
+        "/bookings",
+        bookingInfoWithUnpaidStatus
+      );
+      console.log("Booking confirmed:", data);
+
+      // UI updates: Show success message, close modal, and navigate
+      toast.success("Your booking is confirmed. Please pay later.");
+      closeModal();
+      navigate("/dashboard/registered-camps"); // Adjust the path as needed
+    } catch (error) {
+      console.error("Failed to confirm booking:", error);
+      toast.error("Failed to confirm your booking. Please try again.");
+    }
   };
 
   return (
@@ -150,22 +193,34 @@ const CheckoutForm = ({ closeModal, bookingInfo, formData, refetch }) => {
             },
           }}
         />
+        <p className="text-sm text-center text-gray-500 mt-2">
+          If Your Card is Declined, Please Click Pay Later
+        </p>
         <div className="flex gap-8 mt-2 justify-around">
-          <button
-            disabled={!stripe || !clientSecret || processing}
-            type="submit"
-            // className="inline-flex justify-center rounded-md border border-transparent bg-green-100 px-4 py-2 text-sm font-medium text-green-900 hover:bg-green-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2"
-            className="mt-4 w-full px-4 cursor-pointer bg-green-100 hover:bg-green-200 py-3  text-sm font-semibold rounded-full  transition outline outline-1 outline-gray-200 "
-          >
-            {processing ? (
-              <PiSpinnerBallFill
-                className="animate-spin text-green-700 m-auto"
-                size={24}
-              />
-            ) : (
-              `Pay $${bookingInfo?.price}`
-            )}
-          </button>
+          {paymentDeclined ? (
+            <button
+              onClick={handlePayLater}
+              type="button"
+              className="mt-4 w-full px-4 cursor-pointer bg-yellow-100 hover:bg-yellow-200 py-3 text-sm font-semibold rounded-full transition outline outline-1 outline-gray-200"
+            >
+              Pay Later
+            </button>
+          ) : (
+            <button
+              disabled={!stripe || !clientSecret || processing}
+              type="submit"
+              className="mt-4 w-full px-4 cursor-pointer bg-green-100 hover:bg-green-200 py-3 text-sm font-semibold rounded-full transition outline outline-1 outline-gray-200"
+            >
+              {processing ? (
+                <PiSpinnerBallFill
+                  className="animate-spin text-green-700 m-auto"
+                  size={24}
+                />
+              ) : (
+                `Pay $${bookingInfo?.price}`
+              )}
+            </button>
+          )}
           <button
             onClick={closeModal}
             type="button"

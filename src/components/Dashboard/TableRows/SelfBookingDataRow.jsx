@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { axiosSecure } from "../../../hooks/useAxiosSecure";
+import BookingModal from "../../Modal/BookingModal";
 import FeedbackModal from "../../Modal/FeedbackModal";
 const SelfBookingDataRow = ({
   booking,
@@ -14,7 +15,8 @@ const SelfBookingDataRow = ({
   openModalId,
 }) => {
   const [feedbacks, setFeedbacks] = useState([]);
-  // only get the current row data and id 
+  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
+  // only get the current row data and id
   const data = feedbacks.filter((feedback) => feedback.campId === campId);
   console.log(data);
 
@@ -30,50 +32,81 @@ const SelfBookingDataRow = ({
       });
   }, []);
 
+  const handlePayNowClick = () => {
+    setIsCheckoutOpen(true); // Open the checkout form
+  };
+
   return (
     <tr>
-      <td   data-aos="fade-right"
-        data-aos-duration="1000" className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+      <td
+        data-aos="fade-right"
+        data-aos-duration="1000"
+        className="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+      >
         <p className="text-gray-900 whitespace-no-wrap">
           {booking?.participant_name}
         </p>
       </td>
-      <td   data-aos="fade-right"
-        data-aos-duration="1000" className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+      <td
+        data-aos="fade-right"
+        data-aos-duration="1000"
+        className="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+      >
         <p className="text-gray-900 whitespace-no-wrap">{booking?.camp_name}</p>
       </td>
-      <td   data-aos="fade-right"
-        data-aos-duration="1000" className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+      <td
+        data-aos="fade-right"
+        data-aos-duration="1000"
+        className="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+      >
         <p className="text-gray-900 whitespace-no-wrap">
           ${booking?.camp_fees}
         </p>
       </td>
-      <td   data-aos="fade-right"
-        data-aos-duration="1000" className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-        <p className="text-gray-900 whitespace-no-wrap">
-          {booking?.transactionId ? "Paid" : "Not Paid"}
-        </p>
-      </td>
-      <td   data-aos="fade-right"
-        data-aos-duration="1000" className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+      <td
+        data-aos="fade-right"
+        data-aos-duration="1000"
+        className="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+      >
         <p className="text-gray-900 whitespace-no-wrap">
           {booking?.transactionId ? (
-            "Confirmed"
+            "Paid"
           ) : (
             <button
-              onClick={() => {
-                refetch();
-                toast.success("Payment was Successful");
-              }}
+              onClick={handlePayNowClick}
               className="bg-green-600 text-white px-3 py-1 rounded-md"
             >
-              Pay Now
+              {" "}
+              Pay
             </button>
           )}
         </p>
       </td>
-      <td   data-aos="fade-right"
-        data-aos-duration="1000" className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+      {isCheckoutOpen && (
+        <BookingModal
+          isOpen={isCheckoutOpen}
+          closeModal={() => setIsCheckoutOpen(false)}
+          booking={booking}
+          refetch={refetch}
+          bookingInfo={{
+            ...booking,
+          }}
+
+          // Pass any other props needed by CheckoutForm
+        />
+      )}
+      <td
+        data-aos="fade-right"
+        data-aos-duration="1000"
+        className="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+      >
+        <p className="text-gray-900 whitespace-no-wrap">hi</p>
+      </td>
+      <td
+        data-aos="fade-right"
+        data-aos-duration="1000"
+        className="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+      >
         {/* add a feedback button green background white text */}
         <button
           onClick={() => {
@@ -94,8 +127,11 @@ const SelfBookingDataRow = ({
         refetch={refetch}
         title={booking?.camp_name}
       />
-      <td   data-aos="fade-right"
-        data-aos-duration="1000" className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+      <td
+        data-aos="fade-right"
+        data-aos-duration="1000"
+        className="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+      >
         {/* circular cross button */}
         <button
           onClick={() => {

@@ -178,7 +178,7 @@ const BookingModal = ({ closeModal, isOpen, bookingInfo, refetch }) => {
                   </div>
                 </form>
                 <hr className="mt-4 mb-4 " />
-
+              
                 <Elements stripe={stripePromise}>
                   {/* checkout form */}
                   <CheckoutForm
@@ -187,7 +187,10 @@ const BookingModal = ({ closeModal, isOpen, bookingInfo, refetch }) => {
                     refetch={refetch}
                     formData={formData}
                   />
+                  
                 </Elements>
+                
+                
               </DialogPanel>
             </TransitionChild>
           </div>
