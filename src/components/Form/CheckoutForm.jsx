@@ -107,6 +107,7 @@ const CheckoutForm = ({ closeModal, bookingInfo, formData, refetch }) => {
         transactionId: paymentIntent ? paymentIntent.id : "N/A",
         date: new Date(),
         payment_status: paymentStatus,
+        camp_fees: bookingInfo.price,
       };
       delete paymentInfo._id;
       console.log(paymentInfo);
@@ -152,9 +153,9 @@ const CheckoutForm = ({ closeModal, bookingInfo, formData, refetch }) => {
       campId: bookingInfo._id,
       date: new Date(),
       payment_status: "Unpaid",
+      camp_fees: 0,
     };
-    delete bookingInfoWithUnpaidStatus._id; // Remove if _id is not needed or should not be duplicated
-
+    delete bookingInfoWithUnpaidStatus._id;
     try {
       // Save the booking information to the database
       const { data } = await axiosSecure.post(
