@@ -96,6 +96,7 @@ const CheckoutForm = ({ closeModal, bookingInfo, formData, refetch }) => {
         campId: bookingInfo._id,
         transactionId: paymentIntent.id,
         date: new Date(),
+        payment_status: "Pending",
       };
       delete paymentInfo._id;
       console.log(paymentInfo);
@@ -121,6 +122,9 @@ const CheckoutForm = ({ closeModal, bookingInfo, formData, refetch }) => {
       } catch (err) {
         console.log(err);
       }
+    }
+    else{
+      toast.error("Payment Failed");
     }
 
     setProcessing(false);

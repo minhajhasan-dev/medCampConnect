@@ -36,7 +36,7 @@ const SignUp = () => {
       const image_url = await imageUpload(image);
       console.log(image_url);
       //2. User Registration
-      await createUser(email, password, name, image);
+      await createUser(email, password, name, image_url);
 
       // 3. Save username and photo in firebase
       await updateUserProfile(name, image_url);
