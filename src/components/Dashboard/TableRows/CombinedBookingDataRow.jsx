@@ -38,44 +38,50 @@ const CombinedBookingDataRow = ({ booking, refetch, campId, userEmail }) => {
           {booking?.participant_name}
         </p>
       </td>
-      <td data-aos="fade-right"
-        data-aos-duration="1000" className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+      <td
+        data-aos="fade-right"
+        data-aos-duration="1000"
+        className="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+      >
         <p className="text-gray-900 whitespace-no-wrap">{booking?.camp_name}</p>
       </td>
-      <td data-aos="fade-right"
-        data-aos-duration="1000" className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+      <td
+        data-aos="fade-right"
+        data-aos-duration="1000"
+        className="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+      >
         <p className="text-gray-900 whitespace-no-wrap">
-          ${booking?.camp_fees}
+          ${booking?.price}
         </p>
       </td>
-      <td data-aos="fade-right"
-        data-aos-duration="1000" className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+      <td
+        data-aos="fade-right"
+        data-aos-duration="1000"
+        className="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+      >
         <p className="text-gray-900 whitespace-no-wrap">
-          {booking?.transactionId ? "Paid" : "Not Paid"}
+          {booking?.payment_status}
         </p>
       </td>
-      <td data-aos="fade-right"
-        data-aos-duration="1000" className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+      <td
+        data-aos="fade-right"
+        data-aos-duration="1000"
+        className="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+      >
         <p className="text-gray-900 whitespace-no-wrap">
-          {booking?.transactionId ? (
-            "Confirmed"
-          ) : (
-            <button
-              onClick={() => {
-                refetch();
-                toast.success("Payment was Successful");
-              }}
-              className="bg-green-600 text-white px-3 py-1 rounded-md"
-            >
-              Pay Now
-            </button>
-          )}
+          {booking?.payment_status === "Unpaid" ? "Pending" : "Confirmed"}
         </p>
       </td>
-      <td data-aos="fade-right"
-        data-aos-duration="1000" className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+      <td
+        data-aos="fade-right"
+        data-aos-duration="1000"
+        className="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+      >
         {/* circular cross button */}
-        <button onClick={() => setIsOpen(true)}>
+        <button
+          disabled={booking?.payment_status === "Paid" ? true : false}
+          onClick={() => setIsOpen(true)}
+        >
           {" "}
           <svg
             xmlns="http://www.w3.org/2000/svg"
