@@ -108,6 +108,7 @@ const CheckoutForm = ({ closeModal, bookingInfo, formData, refetch }) => {
         date: new Date(),
         payment_status: paymentStatus,
         camp_fees: bookingInfo.price,
+        feedback_given: false,
       };
       delete paymentInfo._id;
       console.log(paymentInfo);
@@ -154,6 +155,7 @@ const CheckoutForm = ({ closeModal, bookingInfo, formData, refetch }) => {
       date: new Date(),
       payment_status: "Unpaid",
       camp_fees: 0,
+      feedback_given: false,
     };
     delete bookingInfoWithUnpaidStatus._id;
     try {

@@ -15,7 +15,6 @@ import { axiosSecure } from "../../hooks/useAxiosSecure";
 const FeedbackModal = ({ closeModal, setIsOpen, isOpen, title, campId }) => {
   const [rating, setRating] = useState(0);
   const [feedback, setFeedback] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleRatingChange = (value) => {
     setRating(value);
@@ -25,9 +24,10 @@ const FeedbackModal = ({ closeModal, setIsOpen, isOpen, title, campId }) => {
 
   const handleSubmit = async () => {
     setIsOpen(false);
-    // send feedback to the server
+
+    // Handle the post request
     try {
-      await axiosSecure.post("/feedbacks", {
+      const postResponse = await axiosSecure.post("/feedbacks", {
         title,
         rating,
         feedback,
@@ -36,11 +36,11 @@ const FeedbackModal = ({ closeModal, setIsOpen, isOpen, title, campId }) => {
         photo: user.photoURL,
         campId,
       });
-      setIsSubmitting(true);
+      console.log("Post response:", postResponse);
       toast.success("Feedback Submitted");
-      console.log({ rating, feedback });
     } catch (error) {
-      toast.error("Failed to submit feedback");
+      console.error("Post request error:", error);
+      toast.error("Failed to submit feedback.");
     }
   };
 
@@ -108,7 +108,6 @@ const FeedbackModal = ({ closeModal, setIsOpen, isOpen, title, campId }) => {
                     <button
                       onClick={handleSubmit}
                       className="bg-green-600 text-white px-3 py-1 rounded-md ml-2"
-                      disabled={isSubmitting}
                     >
                       Submit
                     </button>

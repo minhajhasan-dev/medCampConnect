@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { axiosSecure } from "../../../hooks/useAxiosSecure";
 import BookingModal from "../../Modal/BookingModal";
+import DeleteModal from "../../Modal/DeleteModal";
 import FeedbackModal from "../../Modal/FeedbackModal";
 const SelfBookingDataRow = ({
   booking,
@@ -16,6 +17,7 @@ const SelfBookingDataRow = ({
 }) => {
   const [feedbacks, setFeedbacks] = useState([]);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
+
   // only get the current row data and id
   const data = feedbacks.filter((feedback) => feedback.campId === campId);
   console.log(data);
@@ -31,6 +33,20 @@ const SelfBookingDataRow = ({
         console.log(err);
       });
   }, []);
+
+  // delete booking
+
+  const handleDelete = async () => {
+    try {
+      await axiosSecure.delete(
+        `/booking/${booking.participant_email}/${booking.campId}`
+      );
+      refetch();
+      toast.success("Booking was deleted successfully");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handlePayNowClick = () => {
     setIsCheckoutOpen(true); // Open the checkout form
@@ -100,7 +116,9 @@ const SelfBookingDataRow = ({
         data-aos-duration="1000"
         className="px-5 py-5 border-b border-gray-200 bg-white text-sm"
       >
-        <p className="text-gray-900 whitespace-no-wrap">hi</p>
+        <p className="text-gray-900 whitespace-no-wrap">
+          {booking?.payment_status === "Unpaid" ? "Pending" : "Confirmed"}
+        </p>
       </td>
       <td
         data-aos="fade-right"
@@ -109,6 +127,7 @@ const SelfBookingDataRow = ({
       >
         {/* add a feedback button green background white text */}
         <button
+          disabled={booking?.feedback_given ? true : false}
           onClick={() => {
             setOpenModalId(booking._id);
           }}
@@ -134,10 +153,10 @@ const SelfBookingDataRow = ({
       >
         {/* circular cross button */}
         <button
-          onClick={() => {
-            toast.error("Booking Cancellation is not allowed");
-          }}
+          disabled={booking?.payment_status === "Paid" ? true : false}
+          onClick={() => setIsOpen(true)}
         >
+          {" "}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6 text-red-500"
@@ -153,6 +172,13 @@ const SelfBookingDataRow = ({
             />
           </svg>
         </button>
+        {/* Delete modal */}
+        <DeleteModal
+          isOpen={isOpen}
+          closeModal={() => setIsOpen(false)}
+          handleDelete={handleDelete}
+          id={campId}
+        />
       </td>
     </tr>
   );
