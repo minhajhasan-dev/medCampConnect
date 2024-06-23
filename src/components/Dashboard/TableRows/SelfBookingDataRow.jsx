@@ -126,16 +126,20 @@ const SelfBookingDataRow = ({
         className="px-5 py-5 border-b border-gray-200 bg-white text-sm"
       >
         {/* add a feedback button green background white text */}
-        <button
-          disabled={booking?.feedback_given ? true : false}
-          onClick={() => {
-            setOpenModalId(booking._id);
-          }}
-          id={booking._id}
-          className="bg-green-600 text-white px-3 py-1 rounded-md"
-        >
-          Feedback
-        </button>
+        {booking?.payment_status === "Paid" ? (
+          <button
+            onClick={() => {
+              setOpenModalId(booking._id);
+            }}
+            id={booking._id}
+            className="bg-green-600 text-white px-3 py-1 rounded-md"
+          >
+            Feedback
+          </button>
+        ) : (
+          <p className="text-gray-900 font-semibold whitespace-no-wrap text-center">N/A</p>
+        )}
+     
       </td>
       <FeedbackModal
         isOpen={openModalId === booking._id}
